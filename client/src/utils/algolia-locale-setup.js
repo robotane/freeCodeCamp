@@ -1,4 +1,6 @@
-import { clientLocale } from '../../../config/env.json';
+import envData from '../../../config/env.json';
+
+const { clientLocale } = envData;
 
 const algoliaIndices = {
   english: {
@@ -12,6 +14,10 @@ const algoliaIndices = {
   chinese: {
     name: 'news-zh',
     searchPage: 'https://chinese.freecodecamp.org/news/search/'
+  },
+  'chinese-traditional': {
+    name: 'news-zh',
+    searchPage: 'https://chinese.freecodecamp.org/news/search'
   }
 };
 

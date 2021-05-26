@@ -1,16 +1,12 @@
 const path = require('path');
-
-const {
-  clientLocale,
-  curriculumLocale,
-  homeLocation
-} = require('../config/env.json');
-
+const envData = require('../config/env.json');
 const {
   buildChallenges,
   replaceChallengeNode,
   localeChallengesRootDir
 } = require('./utils/buildChallenges');
+
+const { clientLocale, curriculumLocale, homeLocation } = envData;
 
 const curriculumIntroRoot = path.resolve(__dirname, './src/pages');
 const pathPrefix =
@@ -19,12 +15,22 @@ const pathPrefix =
     : '/' + clientLocale;
 
 module.exports = {
+  flags: {
+    DEV_SSR: false
+  },
   siteMetadata: {
     title: 'freeCodeCamp',
     siteUrl: homeLocation
   },
   pathPrefix: pathPrefix,
   plugins: [
+    {
+      resolve: 'gatsby-plugin-webpack-bundle-analyser-v2',
+      options: {
+        analyzerMode: 'disabled',
+        generateStatsFile: process.env.CI
+      }
+    },
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-postcss',
     {
@@ -84,20 +90,20 @@ module.exports = {
         }
       }
     },
-    {
-      resolve: `gatsby-plugin-advanced-sitemap`,
-      options: {
-        exclude: [
-          `/dev-404-page`,
-          `/404`,
-          `/404.html`,
-          `/offline-plugin-app-shell-fallback`,
-          `/learn`,
-          /(\/)learn(\/)\S*/
-        ],
-        addUncaughtPages: true
-      }
-    },
+    // {
+    //   resolve: `gatsby-plugin-advanced-sitemap`,
+    //   options: {
+    //     exclude: [
+    //       `/dev-404-page`,
+    //       `/404`,
+    //       `/404.html`,
+    //       `/offline-plugin-app-shell-fallback`,
+    //       `/learn`,
+    //       /(\/)learn(\/)\S*/
+    //     ],
+    //     addUncaughtPages: true
+    //   }
+    // },
     {
       resolve: 'gatsby-plugin-manifest',
       options: {

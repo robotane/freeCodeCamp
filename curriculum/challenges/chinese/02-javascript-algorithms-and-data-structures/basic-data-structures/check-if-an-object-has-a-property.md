@@ -1,6 +1,6 @@
 ---
 id: 587d7b7d367417b2b2512b1c
-title: Check if an Object has a Property
+title: 检查对象是否具有某个属性
 challengeType: 1
 forumTopicId: 301155
 dashedName: check-if-an-object-has-a-property
@@ -8,21 +8,30 @@ dashedName: check-if-an-object-has-a-property
 
 # --description--
 
-Now we can add, modify, and remove keys from objects. But what if we just wanted to know if an object has a specific property? JavaScript provides us with two different ways to do this. One uses the `hasOwnProperty()` method and the other uses the `in` keyword. If we have an object `users` with a property of `Alan`, we could check for its presence in either of the following ways:
+我们已经学习了如何添加、修改和移除对象中的属性。 但如果我们想知道一个对象中是否包含某个属性呢？ JavaScript 为我们提供了两种不同的方式来实现这个功能： 一个是通过 `hasOwnProperty()` 方法，另一个是使用 `in` 关键字。 假如我们有一个 `users` 对象，为检查它是否含有 `Alan` 属性，可以这样写：
 
 ```js
 users.hasOwnProperty('Alan');
 'Alan' in users;
-// both return true
 ```
+
+这两者结果都应该为 `true`。
 
 # --instructions--
 
-We've created an object, `users`, with some users in it and a function `isEveryoneHere`, which we pass the `users` object to as an argument. Finish writing this function so that it returns `true` only if the `users` object contains all four names, `Alan`, `Jeff`, `Sarah`, and `Ryan`, as keys, and `false` otherwise.
+请完善这个函数，如果传递给它的对象包含四个名字 `Alan`、`Jeff`、`Sarah` 和 `Ryan`，函数返回 true，否则返回 false。
 
 # --hints--
 
-The `users` object should only contain the keys `Alan`, `Jeff`, `Sarah`, and `Ryan`
+不应直接访问 `users` 对象。
+
+```js 
+
+assert(code.match(/users/gm).length <= 2)
+
+```
+
+`users` 对象应该只包含 `Alan`、`Jeff`、`Sarah`、`Ryan` 4 个键。
 
 ```js
 assert(
@@ -34,13 +43,13 @@ assert(
 );
 ```
 
-The function `isEveryoneHere` should return `true` if `Alan`, `Jeff`, `Sarah`, and `Ryan` are properties on the `users` object
+如果 `Alan`、`Jeff`、`Sarah`、`Ryan` 是传递给函数 `isEveryoneHere` 对象的属性，则函数应返回 `true`。
 
 ```js
 assert(isEveryoneHere(users) === true);
 ```
 
-The function `isEveryoneHere` should return `false` if `Alan` is not a property on the `users` object
+如果传递给函数 `isEveryoneHere` 对象的属性中不包含 `Alan`，则函数返回 `false`。
 
 ```js
 assert(
@@ -51,7 +60,7 @@ assert(
 );
 ```
 
-The function `isEveryoneHere` should return `false` if `Jeff` is not a property on the `users` object
+如果传递给函数 `isEveryoneHere` 对象的属性中不包含 `Jeff`，则函数返回 `false`。
 
 ```js
 assert(
@@ -62,7 +71,7 @@ assert(
 );
 ```
 
-The function `isEveryoneHere` should return `false` if `Sarah` is not a property on the `users` object
+如果传递给函数 `isEveryoneHere` 对象的属性中不包含 `Sarah`，则函数返回 `false`。
 
 ```js
 assert(
@@ -73,7 +82,7 @@ assert(
 );
 ```
 
-The function `isEveryoneHere` should return `false` if `Ryan` is not a property on the `users` object
+如果传递给函数 `isEveryoneHere` 对象的属性中不包含 `Ryan`，则函数返回 `false`。
 
 ```js
 assert(
@@ -108,7 +117,7 @@ let users = {
   }
 };
 
-function isEveryoneHere(obj) {
+function isEveryoneHere(userObj) {
   // Only change code below this line
 
   // Only change code above this line
@@ -139,13 +148,13 @@ let users = {
   }
 };
 
-function isEveryoneHere(obj) {
+function isEveryoneHere(userObj) {
   return [
     'Alan',
     'Jeff',
     'Sarah',
     'Ryan'
-  ].every(i => obj.hasOwnProperty(i));
+  ].every(user => userObj.hasOwnProperty(user));
 }
 
 console.log(isEveryoneHere(users));

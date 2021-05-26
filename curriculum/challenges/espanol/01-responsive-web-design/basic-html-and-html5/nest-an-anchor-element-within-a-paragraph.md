@@ -2,7 +2,6 @@
 id: bad87fee1348bd9aede08817
 title: Anida un elemento anchor dentro de un párrafo
 challengeType: 0
-videoUrl: 'https://scrimba.com/p/pVMPUv/cb6k8Cb'
 forumTopicId: 18244
 dashedName: nest-an-anchor-element-within-a-paragraph
 ---
@@ -13,29 +12,37 @@ Puedes anidar enlaces dentro de otros elementos de texto.
 
 ```html
 <p>
-  Here's a <a target="_blank" href="http://freecodecamp.org"> link to freecodecamp.org</a> for you to follow.
+  Here's a <a target="_blank" href="https://www.freecodecamp.org"> link to www.freecodecamp.org</a> for you to follow.
 </p>
 ```
 
 Desglosemos el ejemplo. El texto normal está envuelto en el elemento `p`:
 
-`<p> Here's a ... for you to follow. </p>`
+```html
+<p> Here's a ... for you to follow. </p>
+```
 
 A continuación está el elemento *anchor* `<a>` (que requiere una etiqueta de cierre `</a>`):
 
-`<a> ... </a>`
+```html
+<a> ... </a>
+```
 
 `target` es un atributo de etiqueta anchor que especifica dónde abrir el enlace. El valor `_blank` especifica abrir el enlace en una nueva pestaña. El `href` es un atributo de etiqueta anchor que contiene la dirección URL del enlace:
 
-`<a href="http://freecodecamp.org"> ... </a>`
+```html
+<a href="https://www.freecodecamp.org" target="_blank"> ... </a>
+```
 
-El texto, `link to freecodecamp.org`, dentro de un elemento `a` se llama `anchor text`, y mostrará el enlace para hacer clic:
+El texto, `link to www.freecodecamp.org`, dentro de un elemento `a` se llama <dfn>texto de anclaje</dfn>, y mostrará el enlace para hacer clic:
 
-`<a href=" ... ">link to freecodecamp.org</a>`
+```html
+<a href=" ... " target="...">link to freecodecamp.org</a>
+```
 
 El resultado final del ejemplo se verá así:
 
-Aquí hay un enlace [a freecodecamp.org](http://freecodecamp.org) para que lo sigas.
+Aquí hay un enlace <a href="https://www.freecodecamp.org" target="_blank">a www.freecodecamp.org</a> para que lo sigas.
 
 # --instructions--
 
@@ -43,11 +50,19 @@ Anida el elemento `a` existente dentro de un nuevo elemento `p`. El nuevo párra
 
 # --hints--
 
-Debes tener un elemento `a` que enlace a "`https://freecatphotoapp.com`".
+Solo debes tener un elemento `a`.
 
 ```js
 assert(
-  $('a[href="https://freecatphotoapp.com"]').length > 0 
+  $('a').length  === 1 
+);
+```
+
+El elemento `a` debe enlazar a "`https://www.freecatphotoapp.com`".
+
+```js
+assert(
+  $('a[href="https://www.freecatphotoapp.com"]').length  === 1 
 );
 ```
 
@@ -61,7 +76,7 @@ assert(
 );
 ```
 
-Debes crear un nuevo elemento `p` alrededor de tu elemento `a`. Debe haber al menos 3 etiquetas `p` en tu código HTML.
+Debes crear un nuevo elemento `p`. Debe haber al menos 3 etiquetas `p` en tu código HTML.
 
 ```js
 assert($('p') && $('p').length > 2);
@@ -71,15 +86,15 @@ Tu elemento `a` debe ser anidado dentro de tu nuevo elemento `p`.
 
 ```js
 assert(
-  $('a[href="https://freecatphotoapp.com"]').parent().is('p')
+  $('a[href="https://www.freecatphotoapp.com"]').parent().is('p')
 );
 ```
 
-Tu elemento `p` debe contener el texto `View more` (con un espacio después de él).
+El elemento `p` debe contener el texto `View more` (con un espacio después de él).
 
 ```js
 assert(
-  $('a[href="https://freecatphotoapp.com"]')
+  $('a[href="https://www.freecatphotoapp.com"]')
     .parent()
     .text()
     .match(/View\smore\s/gi)
@@ -96,7 +111,7 @@ assert(
 );
 ```
 
-Cada uno de tus elementos `p` debe tener una etiqueta de cierre.
+Cada uno de los elementos `p` debe tener una etiqueta de cierre.
 
 ```js
 assert(
@@ -124,9 +139,9 @@ assert(
 <h2>CatPhotoApp</h2>
 <main>
 
-  <a href="https://freecatphotoapp.com" target="_blank">cat photos</a>
+  <a href="https://www.freecatphotoapp.com" target="_blank">cat photos</a>
 
-  <img src="https://bit.ly/fcc-relaxing-cat" alt="A cute orange cat lying on its back.">
+  <img src="https://www.bit.ly/fcc-relaxing-cat" alt="A cute orange cat lying on its back.">
 
   <p>Kitty ipsum dolor sit amet, shed everywhere shed everywhere stretching attack your ankles chase the red dot, hairball run catnip eat the grass sniff.</p>
   <p>Purr jump eat the grass rip the couch scratched sunbathe, shed everywhere rip the couch sleep in the sink fluffy fur catnip scratched.</p>
@@ -138,9 +153,9 @@ assert(
 ```html
 <h2>CatPhotoApp</h2>
 <main>
-  <p>View more <a target="_blank" href="https://freecatphotoapp.com">cat photos</a></p>
+  <p>View more <a target="_blank" href="https://www.freecatphotoapp.com">cat photos</a></p>
 
-  <img src="https://bit.ly/fcc-relaxing-cat" alt="A cute orange cat lying on its back.">
+  <img src="https://www.bit.ly/fcc-relaxing-cat" alt="A cute orange cat lying on its back.">
 
   <p>Kitty ipsum dolor sit amet, shed everywhere shed everywhere stretching attack your ankles chase the red dot, hairball run catnip eat the grass sniff.</p>
   <p>Purr jump eat the grass rip the couch scratched sunbathe, shed everywhere rip the couch sleep in the sink fluffy fur catnip scratched.</p>

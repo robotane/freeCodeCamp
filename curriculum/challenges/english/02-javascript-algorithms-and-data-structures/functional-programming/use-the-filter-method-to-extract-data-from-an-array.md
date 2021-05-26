@@ -46,7 +46,7 @@ assert(
 Your code should use the `filter` method.
 
 ```js
-assert(code.match(/\.filter/g));
+assert(code.match(/\s*\.\s*filter/g));
 ```
 
 Your code should not use a `for` loop.
@@ -82,7 +82,7 @@ var watchList = [
     "Genre": "Action, Adventure, Crime",
     "Director": "Christopher Nolan",
     "Writer": "Christopher Nolan",
-    "Actors": "Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page, Tom Hardy",
+    "Actors": "Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page, Tom Hardy",
     "Plot": "A thief, who steals corporate secrets through use of dream-sharing technology, is given the inverse task of planting an idea into the mind of a CEO.",
     "Language": "English, Japanese, French",
     "Country": "USA, UK",
@@ -208,7 +208,7 @@ var watchList = [
     "Genre": "Action, Adventure, Crime",
     "Director": "Christopher Nolan",
     "Writer": "Christopher Nolan",
-    "Actors": "Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page, Tom Hardy",
+    "Actors": "Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page, Tom Hardy",
     "Plot": "A thief, who steals corporate secrets through use of dream-sharing technology, is given the inverse task of planting an idea into the mind of a CEO.",
     "Language": "English, Japanese, French",
     "Country": "USA, UK",

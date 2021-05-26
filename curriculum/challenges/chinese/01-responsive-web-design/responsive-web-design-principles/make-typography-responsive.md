@@ -17,7 +17,9 @@ dashedName: make-typography-responsive
 
 下面这个例子是设置 `body` 标签的宽度为视窗宽度的 30%。
 
-`body { width: 30vw; }`
+```css
+body { width: 30vw; }
+```
 
 # --instructions--
 
@@ -28,13 +30,21 @@ dashedName: make-typography-responsive
 `h2` 元素的 `width` 应为 80vw。
 
 ```js
-assert(code.match(/h2\s*?{\s*?width:\s*?80vw;\s*?}/g));
+assert(
+  __helpers
+    .removeCssComments(code)
+    .match(/h2\s*?{\s*?width:\s*?80vw;\s*?}/g)
+);
 ```
 
 `p` 元素的 `width` 应为 75vmin。
 
 ```js
-assert(code.match(/p\s*?{\s*?width:\s*?75vmin;\s*?}/g));
+assert(
+  __helpers
+    .removeCssComments(code)
+    .match(/p\s*?{\s*?width:\s*?75vmin;\s*?}/g)
+);
 ```
 
 # --seed--

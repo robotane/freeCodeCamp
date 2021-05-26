@@ -1,27 +1,62 @@
 {
   "env": {
-		"es6": true,
-		"browser": true,
-		"mocha": true,
-		"node": true
+    "es6": true,
+    "browser": true,
+    "mocha": true,
+    "node": true
   },
   "parser": "babel-eslint",
   "root": true,
-  "extends": ["./.eslintrc-base.json", "prettier", "prettier/react"],
-  "plugins": ["react", "import", "prefer-object-spread", "prettier", "react-hooks", "jsx-a11y"],
+  "extends": [
+    "./.eslintrc-base.json",
+    "plugin:prettier/recommended",
+    "plugin:import/typescript"
+  ],
+  "plugins": [
+    "react",
+    "import",
+    "prefer-object-spread",
+    "prettier",
+    "react-hooks",
+    "jsx-a11y"
+  ],
   "globals": {
-		"Promise": true,
-		"window": true,
-		"$": true,
-		"ga": true,
-		"jQuery": true,
-		"router": true
-	},
+    "Promise": true,
+    "window": true,
+    "$": true,
+    "ga": true,
+    "jQuery": true,
+    "router": true
+  },
   "settings": {
     "react": {
       "version": "16.4.2",
-      "import/ignore": ["node_modules", "\\.json$"],
-      "import/extensions": [".js", ".jsx"]
-    }
-  }
+      "import/ignore": [
+        "\\.json$"
+      ],
+      "import/extensions": [
+        ".js",
+        ".jsx",
+        ".tsx"
+      ]
+    },
+    "import/ignore": [
+      "node_modules"
+    ]
+  },
+  "overrides": [{
+    "files": ["**/*.ts?(x)"],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "tsconfigRootDir": "./client",
+      "project": ["./tsconfig.json"]
+     },
+    "extends": [
+      "plugin:@typescript-eslint/recommended",
+      "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    ],
+    "plugins": [
+      "@typescript-eslint"
+    ]
+  }]
 }

@@ -2,10 +2,10 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { Grid, Button } from '@freecodecamp/react-bootstrap';
+import { Grid } from '@freecodecamp/react-bootstrap';
 import Helmet from 'react-helmet';
 
-import { apiLocation } from '../../../config/env.json';
+import envData from '../../../config/env.json';
 import {
   signInLoadingSelector,
   userSelector,
@@ -16,7 +16,7 @@ import { submitNewAbout, updateUserFlag, verifyCert } from '../redux/settings';
 import { createFlashMessage } from '../components/Flash/redux';
 import { useTranslation } from 'react-i18next';
 
-import { FullWidthRow, Loader, Spacer } from '../components/helpers';
+import { Loader, Spacer } from '../components/helpers';
 import About from '../components/settings/About';
 import Privacy from '../components/settings/Privacy';
 import Email from '../components/settings/Email';
@@ -26,6 +26,8 @@ import Honesty from '../components/settings/Honesty';
 import Certification from '../components/settings/Certification';
 import DangerZone from '../components/settings/DangerZone';
 import { User } from '../redux/propTypes';
+
+const { apiLocation } = envData;
 
 const propTypes = {
   createFlashMessage: PropTypes.func.isRequired,
@@ -130,18 +132,6 @@ export function ShowSettings(props) {
       <Grid>
         <main>
           <Spacer size={2} />
-          <FullWidthRow>
-            <Button
-              block={true}
-              bsSize='lg'
-              bsStyle='primary'
-              className='btn-invert'
-              href={`${apiLocation}/signout`}
-            >
-              {t('buttons.sign-me-out')}
-            </Button>
-          </FullWidthRow>
-          <Spacer />
           <h1 className='text-center' style={{ overflowWrap: 'break-word' }}>
             {t('settings.for', { username: username })}
           </h1>
@@ -211,7 +201,4 @@ export function ShowSettings(props) {
 ShowSettings.displayName = 'ShowSettings';
 ShowSettings.propTypes = propTypes;
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ShowSettings);
+export default connect(mapStateToProps, mapDispatchToProps)(ShowSettings);

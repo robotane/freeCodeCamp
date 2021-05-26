@@ -16,21 +16,23 @@ Bootstrap 会根据屏幕大小来动态调整 HTML 元素的大小————�
 
 任何 Web 应用，都可以通过添加如下代码到 HTML 顶部来引入 Bootstrap 。
 
-`<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>`
+```html
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+```
 
-在该类课程中，我们已经提前帮你把相应代码添加到了页面中。 注意使用 `>` 或者 `/>` 两种方式闭合 `link` 标签都是可行的。
+不过在这里，已经预先为此页面添加了上述代码。 注意使用 `>` 或者 `/>` 两种方式闭合 `link` 标签都是可行的。
 
-首先，我们应该把所有 HTML 标签放在 class 为 `container-fluid` 的 `div` 元素内（除了 `link` 标签和 `style` 元素）。
+首先，我们应该将所有 HTML（ `link` 标签和 `style` 元素除外）嵌套在带有 `container-fluid` class 的 `div` 元素里面。
 
 # --hints--
 
-`div` 元素的 class 属性值应该为 `container-fluid`。
+`div` 元素应该有 `container-fluid` class。
 
 ```js
 assert($('div').hasClass('container-fluid'));
 ```
 
-确保该 `div` 元素有闭合标签.
+`div` 元素应该有结束标签。
 
 ```js
 assert(
@@ -40,10 +42,10 @@ assert(
 );
 ```
 
-确保已经将闭合 `style` 标签后所有的 HTML 元素内嵌在 `.container-fluid` 元素中。
+`style` 结束标签后面的所有 HTML 元素都应该被嵌套在 `.container-fluid` 里面。
 
 ```js
-assert($('.container-fluid').children().length >= 8);
+assert($('.container-fluid').children().length >= 8 && !$('.container-fluid').has("style").length && !$('.container-fluid').has("link").length);
 ```
 
 # --seed--

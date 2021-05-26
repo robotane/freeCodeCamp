@@ -6,13 +6,14 @@ const selectors = {
   navigationLinks: '.nav-list',
   avatarContainer: '.avatar-container',
   defaultAvatar: '.avatar-container',
-  menuButton: '.toggle-button-nav'
+  menuButton: '.toggle-button-nav',
+  avatarImage: '.avatar-container .avatar'
 };
 
 let appHasStarted;
 function spyOnListener(win) {
   const addListener = win.EventTarget.prototype.addEventListener;
-  win.EventTarget.prototype.addEventListener = function(name) {
+  win.EventTarget.prototype.addEventListener = function (name) {
     if (name === 'click') {
       appHasStarted = true;
       win.EventTarget.prototype.addEventListener = addListener;
@@ -68,9 +69,7 @@ describe('Navbar', () => {
     () => {
       cy.get(selectors.menuButton).click();
       cy.get(selectors.navigationLinks).contains('Forum');
-      cy.get(selectors.navigationLinks)
-        .contains('Curriculum')
-        .click();
+      cy.get(selectors.navigationLinks).contains('Curriculum').click();
       cy.url().should('include', '/learn');
       cy.get(selectors.navigationLinks).contains('Curriculum');
       cy.get(selectors.navigationLinks).contains('Forum');
@@ -84,20 +83,15 @@ describe('Navbar', () => {
     () => {
       cy.contains(selectors.smallCallToAction, 'Sign in');
       cy.get(selectors.menuButton).click();
-      cy.get(selectors.navigationLinks)
-        .contains('Curriculum')
-        .click();
+      cy.get(selectors.navigationLinks).contains('Curriculum').click();
       cy.contains(selectors.smallCallToAction, 'Sign in');
     }
   );
 
   it('Should have `Profile` link when user is signed in', () => {
     cy.login();
-    cy.get('a[href*="/settings"]').should('be.visible');
     cy.get(selectors.menuButton).click();
-    cy.get(selectors.navigationLinks)
-      .contains('Profile')
-      .click();
+    cy.get(selectors.navigationLinks).contains('Profile').click();
     cy.url().should('include', '/developmentuser');
   });
 
@@ -105,5 +99,11 @@ describe('Navbar', () => {
     cy.login();
     cy.get(selectors.avatarContainer).should('have.class', 'default-border');
     cy.get(selectors.defaultAvatar).should('exist');
+  });
+
+  it('Should have a profile image with dimensions that are <= 31px', () => {
+    cy.login();
+    cy.get(selectors.avatarImage).invoke('width').should('lte', 31);
+    cy.get(selectors.avatarImage).invoke('height').should('lte', 31);
   });
 });

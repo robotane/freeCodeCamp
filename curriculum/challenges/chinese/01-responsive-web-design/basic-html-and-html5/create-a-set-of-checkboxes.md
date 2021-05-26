@@ -21,11 +21,13 @@ dashedName: create-a-set-of-checkboxes
 
 下面是一个复选框的例子：
 
-`<label for="loving"><input id="loving" type="checkbox" name="personality"> Loving</label>`
+```html
+<label for="loving"><input id="loving" type="checkbox" name="personality"> Loving</label>
+```
 
 # --instructions--
 
-请给表单添加三个复选框， 每个复选框都被嵌套进 `label` 元素中， 并且它们的 `name` 属性均为 `personality`。
+请给表单添加三个复选框， 每个复选框都被嵌套进 `label` 元素中。 并且它们的 `name` 属性均为 `personality`。
 
 # --hints--
 
@@ -74,7 +76,7 @@ assert($('label').parent().get(0).tagName.match('FORM'));
 <main>
   <p>Click here to view more <a href="#">cat photos</a>.</p>
 
-  <a href="#"><img src="https://bit.ly/fcc-relaxing-cat" alt="A cute orange cat lying on its back."></a>
+  <a href="#"><img src="https://www.bit.ly/fcc-relaxing-cat" alt="A cute orange cat lying on its back."></a>
 
   <p>Things cats love:</p>
   <ul>
@@ -88,7 +90,7 @@ assert($('label').parent().get(0).tagName.match('FORM'));
     <li>thunder</li>
     <li>other cats</li>
   </ol>
-  <form action="https://freecatphotoapp.com/submit-cat-photo">
+  <form action="https://www.freecatphotoapp.com/submit-cat-photo">
     <label for="indoor"><input id="indoor" type="radio" name="indoor-outdoor"> Indoor</label>
     <label for="outdoor"><input id="outdoor" type="radio" name="indoor-outdoor"> Outdoor</label><br>
     <input type="text" placeholder="cat photo URL" required>
@@ -104,7 +106,7 @@ assert($('label').parent().get(0).tagName.match('FORM'));
 <main>
   <p>Click here to view more <a href="#">cat photos</a>.</p>
 
-  <a href="#"><img src="https://bit.ly/fcc-relaxing-cat" alt="A cute orange cat lying on its back."></a>
+  <a href="#"><img src="https://www.bit.ly/fcc-relaxing-cat" alt="A cute orange cat lying on its back."></a>
 
   <p>Things cats love:</p>
   <ul>
@@ -118,7 +120,7 @@ assert($('label').parent().get(0).tagName.match('FORM'));
     <li>thunder</li>
     <li>other cats</li>
   </ol>
-  <form action="https://freecatphotoapp.com/submit-cat-photo">
+  <form action="https://www.freecatphotoapp.com/submit-cat-photo">
     <label for="indoor"><input id="indoor" type="radio" name="indoor-outdoor"> Indoor</label>
     <label for="outdoor"><input id="outdoor" type="radio" name="indoor-outdoor"> Outdoor</label><br>
     <label for="playful"><input id="playful" type="checkbox" name="personality">Playful</label>

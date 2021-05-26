@@ -10,7 +10,7 @@ import {
 import { getRedirectParams } from './redirection';
 
 export function ifNoUserRedirectHome(message, type = 'errors') {
-  return function(req, res, next) {
+  return function (req, res, next) {
     const { path } = req;
     if (req.user) {
       return next();
@@ -24,7 +24,7 @@ export function ifNoUserRedirectHome(message, type = 'errors') {
 }
 
 export function ifNoUserSend(sendThis) {
-  return function(req, res, next) {
+  return function (req, res, next) {
     if (req.user) {
       return next();
     }
@@ -78,15 +78,17 @@ export function ifUserRedirectTo(status) {
 }
 
 // for use with express-validator error formatter
-export const createValidatorErrorHandler = (...args) => (req, res, next) => {
-  const validation = validationResult(req).formatWith(
-    createValidatorErrorFormatter(...args)
-  );
+export const createValidatorErrorHandler =
+  (...args) =>
+  (req, res, next) => {
+    const validation = validationResult(req).formatWith(
+      createValidatorErrorFormatter(...args)
+    );
 
-  if (!validation.isEmpty()) {
-    const errors = validation.array();
-    return next(errors.pop());
-  }
+    if (!validation.isEmpty()) {
+      const errors = validation.array();
+      return next(errors.pop());
+    }
 
-  return next();
-};
+    return next();
+  };

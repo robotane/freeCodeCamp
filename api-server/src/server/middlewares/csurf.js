@@ -1,6 +1,6 @@
 import csurf from 'csurf';
 
-export default function() {
+export default function getCsurf() {
   const protection = csurf({
     cookie: {
       domain: process.env.COOKIE_DOMAIN || 'localhost',
@@ -12,9 +12,7 @@ export default function() {
     const { path } = req;
     if (
       // eslint-disable-next-line max-len
-      /^\/hooks\/update-paypal$|^\/hooks\/update-stripe$|^\/donate\/charge-stripe$/.test(
-        path
-      )
+      /^\/hooks\/update-paypal$/.test(path)
     ) {
       return next();
     }

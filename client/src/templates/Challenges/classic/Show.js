@@ -160,6 +160,7 @@ class ShowClassic extends Component {
           files,
           fields: { tests },
           challengeType,
+          removeComments,
           helpCategory
         }
       },
@@ -171,6 +172,7 @@ class ShowClassic extends Component {
     updateChallengeMeta({
       ...challengeMeta,
       title,
+      removeComments: removeComments !== false,
       challengeType,
       helpCategory
     });
@@ -204,13 +206,8 @@ class ShowClassic extends Component {
   }
 
   renderInstructionsPanel({ showToolPanel }) {
-    const {
-      block,
-      description,
-      instructions,
-      superBlock,
-      translationPending
-    } = this.getChallenge();
+    const { block, description, instructions, superBlock, translationPending } =
+      this.getChallenge();
 
     const { forumTopicId, title } = this.getChallenge();
     return (
@@ -277,8 +274,10 @@ class ShowClassic extends Component {
 
   render() {
     const {
+      block,
       fields: { blockName },
       forumTopicId,
+      superBlock,
       title
     } = this.getChallenge();
     const {
@@ -331,7 +330,11 @@ class ShowClassic extends Component {
               testOutput={this.renderTestOutput()}
             />
           </Media>
-          <CompletionModal blockName={blockName} />
+          <CompletionModal
+            block={block}
+            blockName={blockName}
+            superBlock={superBlock}
+          />
           <HelpModal />
           <VideoModal videoUrl={this.getVideoUrl()} />
           <ResetModal />
@@ -359,6 +362,7 @@ export const query = graphql`
       title
       description
       instructions
+      removeComments
       challengeType
       helpCategory
       videoUrl

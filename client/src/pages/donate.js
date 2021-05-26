@@ -42,7 +42,7 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export class DonatePage extends Component {
+class DonatePage extends Component {
   constructor(...props) {
     super(...props);
     this.state = {
@@ -62,7 +62,7 @@ export class DonatePage extends Component {
     });
   }
 
-  handleProcessing(duration, amount, action = 'stripe button click') {
+  handleProcessing(duration, amount, action) {
     this.props.executeGA({
       type: 'event',
       data: {

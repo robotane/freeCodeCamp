@@ -24,7 +24,14 @@ dashedName: create-a-set-of-radio-buttons
 </label>
 ```
 
-最佳实践是在 `label` 元素上设置 `for` 属性，让其值与相关联的 `input` 单选按钮的 `id` 属性值相同。 这使得辅助技术能够在标签和子项 `input` 元素之间建立关联关系。 例如：
+最佳实践是在 `label` 元素上设置 `for` 属性，让其值与相关联的 `input` 单选按钮的 `id` 属性值相同。 这使得辅助技术能够在标签和相关的 `input` 元素之间建立关联关系。 例如：
+
+```html
+<input id="indoor" type="radio" name="indoor-outdoor">
+<label for="indoor">Indoor</label>
+```
+
+我们也可以在 `label` 标签中嵌入 `input` 元素：
 
 ```html
 <label for="indoor"> 
@@ -86,7 +93,7 @@ assert(
 );
 ```
 
-所有的单选按钮都应该包含在 `form` 表单中。
+所有的单选按钮都应该包含在 `form` 标签中。
 
 ```js
 assert($('label').parent().get(0).tagName.match('FORM'));
@@ -101,7 +108,7 @@ assert($('label').parent().get(0).tagName.match('FORM'));
 <main>
   <p>Click here to view more <a href="#">cat photos</a>.</p>
 
-  <a href="#"><img src="https://bit.ly/fcc-relaxing-cat" alt="A cute orange cat lying on its back."></a>
+  <a href="#"><img src="https://www.bit.ly/fcc-relaxing-cat" alt="A cute orange cat lying on its back."></a>
 
   <p>Things cats love:</p>
   <ul>
@@ -115,7 +122,7 @@ assert($('label').parent().get(0).tagName.match('FORM'));
     <li>thunder</li>
     <li>other cats</li>
   </ol>
-  <form action="https://freecatphotoapp.com/submit-cat-photo">
+  <form action="https://www.freecatphotoapp.com/submit-cat-photo">
     <input type="text" placeholder="cat photo URL" required>
     <button type="submit">Submit</button>
   </form>
@@ -129,7 +136,7 @@ assert($('label').parent().get(0).tagName.match('FORM'));
 <main>
   <p>Click here to view more <a href="#">cat photos</a>.</p>
 
-  <a href="#"><img src="https://bit.ly/fcc-relaxing-cat" alt="A cute orange cat lying on its back."></a>
+  <a href="#"><img src="https://www.bit.ly/fcc-relaxing-cat" alt="A cute orange cat lying on its back."></a>
 
   <p>Things cats love:</p>
   <ul>
@@ -143,7 +150,7 @@ assert($('label').parent().get(0).tagName.match('FORM'));
     <li>thunder</li>
     <li>other cats</li>
   </ol>
-  <form action="https://freecatphotoapp.com/submit-cat-photo">
+  <form action="https://www.freecatphotoapp.com/submit-cat-photo">
    <label for="indoor"><input id="indoor" type="radio" name="indoor-outdoor"> Indoor</label>
     <label for="outdoor"><input id="outdoor" type="radio" name="indoor-outdoor"> Outdoor</label><br>
     <input type="text" placeholder="cat photo URL" required>

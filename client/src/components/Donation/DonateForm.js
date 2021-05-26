@@ -3,9 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { StripeProvider, Elements } from 'react-stripe-elements';
 import {
-  Button,
   Col,
   Row,
   Tab,
@@ -20,13 +18,8 @@ import {
   durationsConfig,
   defaultAmount,
   defaultDonation,
-  onetimeSKUConfig,
-  donationUrls,
   modalDefaultDonation
 } from '../../../../config/donation-settings';
-import { stripePublicKey, deploymentEnv } from '../../../../config/env.json';
-import { stripeScriptLoader } from '../../utils/scriptLoaders';
-import DonateFormChildViewForHOC from './DonateFormChildViewForHOC';
 import Spacer from '../helpers/Spacer';
 import PaypalButton from './PaypalButton';
 import DonateCompletion from './DonateCompletion';
@@ -34,11 +27,10 @@ import {
   isSignedInSelector,
   signInLoadingSelector,
   donationFormStateSelector,
-  hardGoTo as navigate,
   addDonation,
-  postChargeStripe,
   updateDonationFormState,
-  defaultDonationFormState
+  defaultDonationFormState,
+  userSelector
 } from '../../redux';
 
 import './Donation.css';
@@ -50,14 +42,14 @@ const propTypes = {
   addDonation: PropTypes.func,
   defaultTheme: PropTypes.string,
   donationFormState: PropTypes.object,
+  email: PropTypes.string,
   handleProcessing: PropTypes.func,
   isDonating: PropTypes.bool,
   isMinimalForm: PropTypes.bool,
   isSignedIn: PropTypes.bool,
-  navigate: PropTypes.func.isRequired,
-  postChargeStripe: PropTypes.func.isRequired,
   showLoading: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
+  theme: PropTypes.string,
   updateDonationFormState: PropTypes.func
 };
 
@@ -65,17 +57,18 @@ const mapStateToProps = createSelector(
   signInLoadingSelector,
   isSignedInSelector,
   donationFormStateSelector,
-  (showLoading, isSignedIn, donationFormState) => ({
+  userSelector,
+  (showLoading, isSignedIn, donationFormState, { email, theme }) => ({
     isSignedIn,
     showLoading,
-    donationFormState
+    donationFormState,
+    email,
+    theme
   })
 );
 
 const mapDispatchToProps = {
   addDonation,
-  navigate,
-  postChargeStripe,
   updateDonationFormState
 };
 
@@ -92,62 +85,26 @@ class DonateForm extends Component {
 
     this.state = {
       ...initialAmountAndDuration,
-      processing: false,
-      stripe: null
+      processing: false
     };
 
-    this.handleStripeLoad = this.handleStripeLoad.bind(this);
     this.onDonationStateChange = this.onDonationStateChange.bind(this);
     this.getActiveDonationAmount = this.getActiveDonationAmount.bind(this);
     this.getDonationButtonLabel = this.getDonationButtonLabel.bind(this);
     this.handleSelectAmount = this.handleSelectAmount.bind(this);
     this.handleSelectDuration = this.handleSelectDuration.bind(this);
-    this.handleStripeCheckoutRedirect = this.handleStripeCheckoutRedirect.bind(
-      this
-    );
     this.hideAmountOptionsCB = this.hideAmountOptionsCB.bind(this);
     this.resetDonation = this.resetDonation.bind(this);
   }
 
-  componentDidMount() {
-    if (window.Stripe) {
-      this.handleStripeLoad();
-    } else if (document.querySelector('#stripe-js')) {
-      document
-        .querySelector('#stripe-js')
-        .addEventListener('load', this.handleStripeLoad);
-    } else {
-      stripeScriptLoader(this.handleStripeLoad);
-    }
-  }
-
   componentWillUnmount() {
-    const stripeMountPoint = document.querySelector('#stripe-js');
-    if (stripeMountPoint) {
-      stripeMountPoint.removeEventListener('load', this.handleStripeLoad);
-    }
     this.resetDonation();
-  }
-
-  handleStripeLoad() {
-    // Create Stripe instance once Stripe.js loads
-    if (stripePublicKey) {
-      this.setState(state => ({
-        ...state,
-        stripe: window.Stripe(stripePublicKey)
-      }));
-    }
   }
 
   onDonationStateChange(donationState) {
     // scroll to top
     window.scrollTo(0, 0);
-
     this.props.updateDonationFormState(donationState);
-    // send donation made on the donate page to related news article
-    if (donationState.success && !this.props.isMinimalForm) {
-      this.props.navigate(donationUrls.successUrl);
-    }
   }
 
   getActiveDonationAmount(durationSelected, amountSelected) {
@@ -191,42 +148,6 @@ class DonateForm extends Component {
 
   handleSelectAmount(donationAmount) {
     this.setState({ donationAmount });
-  }
-
-  async handleStripeCheckoutRedirect(e, paymentMethod) {
-    const { stripe } = this.state;
-    const { donationAmount, donationDuration } = this.state;
-
-    this.props.handleProcessing(
-      donationDuration,
-      donationAmount,
-      `stripe (${paymentMethod}) button click`
-    );
-
-    const isOneTime = donationDuration === 'onetime';
-    const getSKUId = () => {
-      const { id } = onetimeSKUConfig[deploymentEnv || 'staging'].find(
-        skuConfig => skuConfig.amount === `${donationAmount}`
-      );
-      return id;
-    };
-
-    e.preventDefault();
-    const item = isOneTime
-      ? {
-          sku: getSKUId(),
-          quantity: 1
-        }
-      : {
-          plan: `${this.durations[donationDuration]}-donation-${donationAmount}`,
-          quantity: 1
-        };
-    const { error } = await stripe.redirectToCheckout({
-      items: [item],
-      successUrl: donationUrls.successUrl,
-      cancelUrl: donationUrls.cancelUrl
-    });
-    console.error(error);
   }
 
   renderAmountButtons(duration) {
@@ -308,7 +229,14 @@ class DonateForm extends Component {
   }
 
   renderDonationOptions() {
-    const { handleProcessing, isSignedIn, addDonation, t } = this.props;
+    const {
+      handleProcessing,
+      isSignedIn,
+      addDonation,
+      t,
+      defaultTheme,
+      theme
+    } = this.props;
     const { donationAmount, donationDuration } = this.state;
 
     const isOneTime = donationDuration === 'onetime';
@@ -324,14 +252,6 @@ class DonateForm extends Component {
         )}
         <Spacer />
         <div className='donate-btn-group'>
-          <Button
-            block={true}
-            bsStyle='primary'
-            id='confirm-donation-btn'
-            onClick={e => this.handleStripeCheckoutRedirect(e, 'credit card')}
-          >
-            <b>{t('donate.credit-card')}</b>
-          </Button>
           <PaypalButton
             addDonation={addDonation}
             donationAmount={donationAmount}
@@ -340,6 +260,7 @@ class DonateForm extends Component {
             isSubscription={isOneTime ? false : true}
             onDonationStateChange={this.onDonationStateChange}
             skipAddDonation={!isSignedIn}
+            theme={defaultTheme ? defaultTheme : theme}
           />
         </div>
       </div>
@@ -355,22 +276,13 @@ class DonateForm extends Component {
   }
 
   renderModalForm() {
-    const { donationAmount, donationDuration, stripe } = this.state;
-    const {
-      handleProcessing,
-      defaultTheme,
-      addDonation,
-      postChargeStripe,
-      t
-    } = this.props;
-
+    const { donationAmount, donationDuration } = this.state;
+    const { handleProcessing, addDonation, defaultTheme, theme } = this.props;
     return (
       <Row>
         <Col lg={8} lgOffset={2} sm={10} smOffset={1} xs={12}>
           <Spacer />
-          <b>
-            {this.getDonationButtonLabel()} {t('donate.paypal')}
-          </b>
+          <b>{this.getDonationButtonLabel()}:</b>
           <Spacer />
           <PaypalButton
             addDonation={addDonation}
@@ -378,25 +290,8 @@ class DonateForm extends Component {
             donationDuration={donationDuration}
             handleProcessing={handleProcessing}
             onDonationStateChange={this.onDonationStateChange}
+            theme={defaultTheme ? defaultTheme : theme}
           />
-        </Col>
-        <Col lg={8} lgOffset={2} sm={10} smOffset={1} xs={12}>
-          <Spacer />
-          <b>{t('donate.credit-card-2')}</b>
-          <Spacer />
-          <StripeProvider stripe={stripe}>
-            <Elements>
-              <DonateFormChildViewForHOC
-                defaultTheme={defaultTheme}
-                donationAmount={donationAmount}
-                donationDuration={donationDuration}
-                getDonationButtonLabel={this.getDonationButtonLabel}
-                handleProcessing={handleProcessing}
-                onDonationStateChange={this.onDonationStateChange}
-                postChargeStripe={postChargeStripe}
-              />
-            </Elements>
-          </StripeProvider>
         </Col>
       </Row>
     );
@@ -413,29 +308,31 @@ class DonateForm extends Component {
 
   render() {
     const {
-      donationFormState: { processing, success, error },
+      donationFormState: { processing, success, error, redirecting },
       isMinimalForm
     } = this.props;
     if (success || error) {
       return this.renderCompletion({
         processing,
+        redirecting,
         success,
         error,
         reset: this.resetDonation
       });
     }
 
-    // keep payment provider elements on DOM during processing to avoid errors.
+    // keep payment provider elements on DOM during processing and redirect to avoid errors.
     return (
       <>
-        {processing &&
+        {(processing || redirecting) &&
           this.renderCompletion({
             processing,
+            redirecting,
             success,
             error,
             reset: this.resetDonation
           })}
-        <div className={processing ? 'hide' : ''}>
+        <div className={processing || redirecting ? 'hide' : ''}>
           {isMinimalForm
             ? this.renderModalForm(processing)
             : this.renderPageForm(processing)}

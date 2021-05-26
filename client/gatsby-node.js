@@ -1,6 +1,9 @@
 const env = require('../config/env');
+const webpack = require('webpack');
 
 const { createFilePath } = require('gatsby-source-filesystem');
+// TODO: ideally we'd remove lodash and just use lodash-es, but we can't require
+// es modules here.
 const uniq = require('lodash/uniq');
 
 const { blockNameify } = require('../utils/block-nameify');
@@ -50,15 +53,6 @@ exports.createPages = function createPages({ graphql, actions, reporter }) {
     }
   }
 
-  if (!env.stripePublicKey) {
-    if (process.env.FREECODECAMP_NODE_ENV === 'production') {
-      throw new Error('Stripe public key is required to start the client!');
-    } else {
-      reporter.info(
-        'Stripe public key missing or invalid. Required for donations.'
-      );
-    }
-  }
   const { createPage } = actions;
 
   return new Promise((resolve, reject) => {
@@ -131,6 +125,7 @@ exports.createPages = function createPages({ graphql, actions, reporter }) {
         );
 
         // Create intro pages
+        // TODO: Remove allMarkdownRemark (populate from elsewhere)
         result.data.allMarkdownRemark.edges.forEach(edge => {
           const {
             node: { frontmatter, fields }
@@ -182,19 +177,36 @@ exports.onCreateWebpackConfig = ({ stage, plugins, actions }) => {
     plugins.define({
       HOME_PATH: JSON.stringify(
         process.env.HOME_PATH || 'http://localhost:3000'
-      ),
-      STRIPE_PUBLIC_KEY: JSON.stringify(process.env.STRIPE_PUBLIC_KEY || '')
+      )
+    }),
+    // We add the shims of the node globals to the global scope
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer']
+    }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser'
     })
   ];
   // The monaco editor relies on some browser only globals so should not be
   // involved in SSR. Also, if the plugin is used during the 'build-html' stage
   // it overwrites the minfied files with ordinary ones.
   if (stage !== 'build-html') {
-    newPlugins.push(new MonacoWebpackPlugin());
+    newPlugins.push(
+      new MonacoWebpackPlugin({ filename: '[name].worker-[contenthash].js' })
+    );
   }
   actions.setWebpackConfig({
-    node: {
-      fs: 'empty'
+    resolve: {
+      fallback: {
+        fs: false,
+        path: require.resolve('path-browserify'),
+        assert: require.resolve('assert'),
+        crypto: require.resolve('crypto-browserify'),
+        util: false,
+        buffer: require.resolve('buffer'),
+        stream: require.resolve('stream-browserify'),
+        process: require.resolve('process/browser')
+      }
     },
     plugins: newPlugins
   });
@@ -212,10 +224,6 @@ exports.onCreateBabelConfig = ({ actions }) => {
     options: {
       '@freecodecamp/react-bootstrap': {
         transform: '@freecodecamp/react-bootstrap/lib/${member}',
-        preventFullImport: true
-      },
-      lodash: {
-        transform: 'lodash/${member}',
         preventFullImport: true
       }
     }

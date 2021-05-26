@@ -15,7 +15,9 @@ Los elementos de entrada `input` son una forma conveniente de obtener informaci√
 
 Puedes crear una entrada de texto de esta manera:
 
-`<input type="text">`
+```html
+<input type="text">
+```
 
 Ten en cuenta que los elementos `input` se cierran autom√°ticamente.
 
@@ -40,7 +42,7 @@ assert($('input[type=text]').length > 0);
 <main>
   <p>Click here to view more <a href="#">cat photos</a>.</p>
 
-  <a href="#"><img src="https://bit.ly/fcc-relaxing-cat" alt="A cute orange cat lying on its back."></a>
+  <a href="#"><img src="https://www.bit.ly/fcc-relaxing-cat" alt="A cute orange cat lying on its back."></a>
 
   <p>Things cats love:</p>
   <ul>
@@ -66,7 +68,7 @@ assert($('input[type=text]').length > 0);
 <main>
   <p>Click here to view more <a href="#">cat photos</a>.</p>
 
-  <a href="#"><img src="https://bit.ly/fcc-relaxing-cat" alt="A cute orange cat lying on its back."></a>
+  <a href="#"><img src="https://www.bit.ly/fcc-relaxing-cat" alt="A cute orange cat lying on its back."></a>
 
   <p>Things cats love:</p>
   <ul>

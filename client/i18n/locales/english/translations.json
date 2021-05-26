@@ -102,6 +102,7 @@
       "contains invalid characters": "Username \"{{username}}\" contains invalid characters",
       "is too short": "Username \"{{username}}\" is too short",
       "is a reserved error code": "Username \"{{username}}\" is a reserved error code",
+      "must be lowercase": "Username \"{{username}}\" must be lowercase",
       "unavailable": "Username not available",
       "validating": "Validating username...",
       "available": "Username is available",
@@ -217,25 +218,16 @@
     "our-nonprofit": "Our Nonprofit",
     "links": {
       "about": "About",
-      "about-url": "https://www.freecodecamp.org/news/about/",
       "alumni": "Alumni Network",
       "open-source": "Open Source",
       "shop": "Shop",
-      "shop-url": "https://www.freecodecamp.org/shop/",
       "support": "Support",
-      "support-url": "https://www.freecodecamp.org/news/support/",
       "sponsors": "Sponsors",
-      "sponsors-url": "https://www.freecodecamp.org/news/sponsors/",
       "honesty": "Academic Honesty",
-      "honesty-url": "https://www.freecodecamp.org/news/academic-honesty-policy/",
       "coc": "Code of Conduct",
-      "coc-url": "https://www.freecodecamp.org/news/code-of-conduct/",
       "privacy": "Privacy Policy",
-      "privacy-url": "https://www.freecodecamp.org/news/privacy-policy/",
       "tos": "Terms of Service",
-      "tos-url": "https://www.freecodecamp.org/news/terms-of-service/",
-      "copyright": "Copyright Policy",
-      "copyright-url": "https://www.freecodecamp.org/news/copyright-policy/"
+      "copyright": "Copyright Policy"
     },
     "language": "Language:"
   },
@@ -298,6 +290,7 @@
   "donate": {
     "title": "Support our nonprofit",
     "processing": "We are processing your donation.",
+    "redirecting": "Redirecting...",
     "thanks": "Thanks for donating",
     "thank-you": "Thank you for being a supporter.",
     "thank-you-2": "Thank you for being a supporter of freeCodeCamp. You currently have a recurring donation.",
@@ -305,6 +298,7 @@
     "help-more": "Help us do more",
     "error": "Something went wrong with your donation.",
     "free-tech": "Your donations will support free technology education for people all over the world.",
+    "no-halo": "If you don't see a gold halo around your profile picture, contact donors@freecodecamp.org.",
     "gift-frequency": "Select gift frequency:",
     "gift-amount": "Select gift amount:",
     "confirm": "Confirm your donation",
@@ -335,7 +329,6 @@
     "why-donate-2": "You also help us create new resources for you to use to expand your own technology skills.",
     "bigger-donation": "Want to make a bigger one-time donation, mail us a check, or give in other ways?",
     "other-ways": "Here are many <0>other ways you can support our non-profit's mission</0>.",
-    "other-ways-url": "https://www.freecodecamp.org/news/how-to-donate-to-free-code-camp",
     "failed-pay": "Uh - oh. It looks like your transaction didn't go through. Could you please try again?",
     "try-again": "Please try again.",
     "card-number": "Your Card Number:",
@@ -347,7 +340,7 @@
     "details": "Please provide as much detail as possible about the account or behavior you are reporting.",
     "portfolio": "Report a users portfolio",
     "portfolio-2": "Do you want to report {{username}}'s portfolio for abuse?",
-    "notify-1": "We will notify the community moderators' team, and a send copy of this report to your email: <strong>{{email}}</strong>",
+    "notify-1": "We will notify the community moderators' team, and send a copy of this report to your email: <strong>{{email}}</strong>",
     "notify-2": "We may get back to you for more information, if required.",
     "what": "What would you like to report?",
     "submit": "Submit the report"
@@ -359,7 +352,7 @@
   },
   "search": {
     "label": "Search",
-    "placeholder": "Search 6,000+ tutorials",
+    "placeholder": "Search 7,000+ tutorials",
     "see-results": "See all results for {{searchQuery}}",
     "no-tutorials": "No tutorials found",
     "try": "Looking for something? Try the search bar on this page.",
@@ -562,5 +555,32 @@
         "Neural Network SMS Text Classifier": "Neural Network SMS Text Classifier"
       }
     }
+  },
+  "certification-card": {
+    "title": "Claim Your Certification",
+    "intro": "Complete the following steps to claim and view your {{i18nCertText}}",
+    "complete-project": "Complete {{i18nCertText}} Projects",
+    "accept-honesty": "Accept our Academic Honesty Policy",
+    "set-name": "Set your name, and make it public",
+    "set-certs-public": "Set your certification settings to public",
+    "set-profile-public": "Set your profile settings to public",
+    "set-claim": "Claim and view your certification"
+  },
+  "forum-help": {
+    "browser-info": "**Your browser information:**",
+    "user-agent": "User Agent is: <code>{{userAgent}}</code>",
+    "challenge": "**Challenge:** {{challengeTitle}}",
+    "challenge-link": "**Link to the challenge:**",
+    "whats-happening": "**Tell us what's happening:**",
+    "describe": "Describe your issue in detail here.",
+    "camper-project": "**Your project link(s)**",
+    "camper-code": "**Your code so far**",
+    "warning": "WARNING",
+    "too-long-one": "The challenge seed code and/or your solution exceeded the maximum length we can port over from the challenge.",
+    "too-long-two": "You will need to take an additional step here so the code you wrote presents in an easy to read format.",
+    "too-long-three": "Please copy/paste all the editor code showing in the challenge from where you just linked.",
+    "add-code-one": "Replace these two sentences with your copied code.",
+    "add-code-two": "Please leave the ``` line above and the ``` line below,",
+    "add-code-three": "because they allow your code to properly format in the post."
   }
 }

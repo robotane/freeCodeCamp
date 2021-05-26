@@ -14,12 +14,9 @@ import Spacer from '../helpers/Spacer';
 import ToggleSetting from './ToggleSetting';
 import SectionHeader from './SectionHeader';
 
-const mapStateToProps = createSelector(
-  userSelector,
-  user => ({
-    user
-  })
-);
+const mapStateToProps = createSelector(userSelector, user => ({
+  user
+}));
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ submitProfileUI }, dispatch);
@@ -69,7 +66,7 @@ class PrivacySettings extends Component {
     } = user.profileUI;
 
     return (
-      <div className='privacy-settings'>
+      <div className='privacy-settings' id='privacy-settings'>
         <SectionHeader>{t('settings.headings.privacy')}</SectionHeader>
         <FullWidthRow>
           <p>{t('settings.privacy')}</p>

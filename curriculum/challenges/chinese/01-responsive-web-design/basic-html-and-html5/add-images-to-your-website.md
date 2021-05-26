@@ -13,7 +13,9 @@ dashedName: add-images-to-your-website
 
 例如：
 
-`<img src="https://www.freecatphotoapp.com/your-image.jpg">`
+```html
+<img src="https://www.freecatphotoapp.com/your-image.jpg">
+```
 
 注意：`img` 元素是没有结束标签的。
 
@@ -25,7 +27,9 @@ dashedName: add-images-to-your-website
 
 让我们给上面例子的 `img` 添加 `alt` 属性。
 
-`<img src="https://www.freecatphotoapp.com/your-image.jpg" alt="A business cat wearing a necktie.">`
+```html
+<img src="https://www.freecatphotoapp.com/your-image.jpg" alt="A business cat wearing a necktie.">
+```
 
 # --instructions--
 
@@ -33,9 +37,7 @@ dashedName: add-images-to-your-website
 
 在 `main` 元素里，给 `p` 元素前面插入一个 `img` 元素。
 
-然后将 `src` 的属性值设置为这个 url：
-
-`https://bit.ly/fcc-relaxing-cat`
+现在设置 `src` 属性，使它指向网址 `https://www.bit.ly/fcc-relaxing-cat`。
 
 最后，不要忘记给 `img` 加上 `alt` 属性。
 
@@ -50,7 +52,7 @@ assert($('img').length);
 你的图片应该有一个 `src` 属性，其值为猫咪图片的 url。
 
 ```js
-assert(/^https:\/\/bit\.ly\/fcc-relaxing-cat$/i.test($('img').attr('src')));
+assert(/^https:\/\/(www\.)?bit\.ly\/fcc-relaxing-cat$/i.test($('img').attr('src')));
 ```
 
 你的图片元素的 `alt` 属性值不应为空。
@@ -84,7 +86,7 @@ assert(
 ```html
 <h2>CatPhotoApp</h2>
 <main>
-  <a href="#"><img src="https://bit.ly/fcc-relaxing-cat" alt="A cute orange cat lying on its back."></a>
+  <a href="#"><img src="https://www.bit.ly/fcc-relaxing-cat" alt="A cute orange cat lying on its back."></a>
   <p>Kitty ipsum dolor sit amet, shed everywhere shed everywhere stretching attack your ankles chase the red dot, hairball run catnip eat the grass sniff.</p>
   <p>Purr jump eat the grass rip the couch scratched sunbathe, shed everywhere rip the couch sleep in the sink fluffy fur catnip scratched.</p>
 </main>

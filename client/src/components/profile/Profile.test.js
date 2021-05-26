@@ -1,9 +1,11 @@
-/* global expect */
+/* global expect jest */
 
 import React from 'react';
 import { render } from '@testing-library/react';
 
 import Profile from './Profile';
+
+jest.mock('../../analytics');
 
 const userProps = {
   user: {
@@ -45,26 +47,12 @@ const userProps = {
   navigate: () => {}
 };
 
-const myProfileProps = {
-  isSessionUser: true,
-  ...userProps
-};
-
 const notMyProfileProps = {
   isSessionUser: false,
   ...userProps
 };
 
 describe('<Profile/>', () => {
-  it('renders the settings button on your own profile', () => {
-    const { getByText } = render(<Profile {...myProfileProps} />);
-
-    expect(getByText('buttons.update-settings')).toHaveAttribute(
-      'href',
-      '/settings'
-    );
-  });
-
   it('renders the report button on another persons profile', () => {
     const { getByText } = render(<Profile {...notMyProfileProps} />);
 
